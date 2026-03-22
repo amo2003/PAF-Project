@@ -23,4 +23,50 @@ public class BookingController {
         BookingResponse response = bookingService.createBooking(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    // GET /api/bookings/{id} — Get booking by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingResponse> getBookingById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.getBookingById(id));
+    }
+
+    // GET /api/bookings/user/{userId} — User views their own bookings
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<BookingResponse>> getBookingsByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(bookingService.getBookingsByUser(userId));
+    }
+
+    // GET /api/bookings — Admin views all bookings
+    @GetMapping
+    public ResponseEntity<List<BookingResponse>> getAllBookings() {
+        return ResponseEntity.ok(bookingService.getAllBookings());
+    }
+
+    // PUT /api/bookings/{id}/approve — Admin approves a booking
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<BookingResponse> approveBooking(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.approveBooking(id));
+    }
+
+    // PUT /api/bookings/{id}/reject — Admin rejects a booking with reason
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<BookingResponse> rejectBooking(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+        String reason = body.get("reason");
+        return ResponseEntity.ok(bookingService.rejectBooking(id, reason));
+    }
+
+    // PUT /api/bookings/{id}/cancel — User cancels an approved booking
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<BookingResponse> cancelBooking(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.cancelBooking(id));
+    }
+
+    // DELETE /api/bookings/{id} — Admin deletes a booking
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
+        return ResponseEntity.noContent().build();
+    }
 }
