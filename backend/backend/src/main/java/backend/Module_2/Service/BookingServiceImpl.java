@@ -1,5 +1,6 @@
 package backend.Module_2.Service;
 
+import backend.Module_2.Model.Booking;
 import backend.Module_2.Repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +13,20 @@ public class BookingServiceImpl {
     }
 
     //convert booking entiy to reponse dto
-    private BookingResponse to
+    private BookingResponse toReponse(Booking booking) {
+        return new BookingResponse(
+                booking.getId(),
+                booking.getUserId(),
+                booking.getResourceId(),
+                booking.getBookingDate(),
+                booking.getStartTime(),
+                booking.getEndTime(),
+                booking.getPurpose(),
+                booking.getAttendees(),
+                booking.getStatus(),
+                booking.getRejectionReason()
+        );
+    }
+
+    
 }
