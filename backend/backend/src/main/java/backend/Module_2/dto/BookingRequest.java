@@ -1,5 +1,7 @@
 package backend.Module_2.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -15,7 +17,7 @@ public class BookingRequest {
     @NotNull(message = "Booking date is required")
     private LocalDate bookingDate;
 
-    @Notnull(message = "Start time is required")
+    @NotNull(message = "Start time is required")
     private LocalTime startTime;
 
     @NotNull(message = "End time is required")
