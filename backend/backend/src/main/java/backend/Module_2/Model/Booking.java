@@ -1,6 +1,7 @@
 package backend.Module_2.Model;
 
 
+import backend.Module_2.Enums.BookingStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class Booking {
     private Integer attendees;
 
     @Enumerated(EnumType.STRING)
-    private  BookingStatus status;
+    private BookingStatus status;
 
     private String rejectionReason;
 
