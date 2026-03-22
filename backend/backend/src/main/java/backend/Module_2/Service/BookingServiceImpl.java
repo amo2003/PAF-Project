@@ -96,4 +96,38 @@ public class BookingServiceImpl {
     }
 
     @Override
+    public BookingResponse rejectBooking(Long id, String reason) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
+
+        if (booking.getStatus() != BookingStatus.PENDING) {
+            throw new RuntimeException("Only pending booking can be rejected");
+
+        }
+
+        booking.setStatus(BookingStatus.REJECTED);
+        booking.setRejectionReason(reason);
+        return toReponse(bookingRepository.save(booking));
+    }
+
+    @Override
+    public BookingResponse cancelBooking(Long id) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
+
+        if (booking.getStatus() != BookingStatus.APPROVED) {
+            throw new RuntimeException("Only approved booking can be cancelled");
+        }
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        return toReponse(bookingRepository.save(booking));
+    }
+
+    @Override
+    public void deleteBooking(Long id) {
+        if (!bookingRepository.existsById(id)) {
+            throw new RuntimeException("Booking not found with id: " + id);
+        }
+        bookingRepository.deleteById(id);
+    }
 }
