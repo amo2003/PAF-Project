@@ -5,6 +5,7 @@ import backend.Module_2.Repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl {
@@ -63,6 +64,35 @@ public class BookingServiceImpl {
         Booking booking = bookingRepository.findBy(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
         return toReponse(booking);
+    }
+
+    @Override
+    public List<BookingResponse> getBookingByUser(Long userId) {
+        return bookingRepository.findByUserId(userId)
+                .stream()
+                .map(this::toReponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookingResponse> getAllBookings() {
+        return bookingRepository.findAll()
+                .stream()
+                .map(this::toReponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BookingResponse approveBooking(Long id) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
+
+        if (booking.getStatus() != BookingStatus.PENDING) {
+            throw new RuntimeException("Only pending booking can be approved");
+        }
+
+        booking.setStatus(BookingStatus.APPROVED);
+        return toReponse(bookingRepository.save(booking));
     }
 
     @Override
