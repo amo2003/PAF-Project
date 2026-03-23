@@ -1,5 +1,8 @@
 package backend.Module_2.Service;
 
+import backend.Module_2.dto.BookingRequest;
+import backend.Module_2.dto.BookingResponse;
+
 import java.util.List;
 
 public interface BookingService {

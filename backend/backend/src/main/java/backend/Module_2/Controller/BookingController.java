@@ -2,9 +2,15 @@ package backend.Module_2.Controller;
 
 
 import backend.Module_2.Service.BookingService;
+import backend.Module_2.dto.BookingRequest;
+import backend.Module_2.dto.BookingResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -33,7 +39,7 @@ public class BookingController {
     // GET /api/bookings/user/{userId} — User views their own bookings
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<BookingResponse>> getBookingsByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(bookingService.getBookingsByUser(userId));
+        return ResponseEntity.ok(bookingService.getBookingByUser(userId));
     }
 
     // GET /api/bookings — Admin views all bookings

@@ -1,4 +1,4 @@
-package backend.Module_2.dto;
+package backend.Module_2.Enums;
 
 public enum BookingStatus {
     PENDING,

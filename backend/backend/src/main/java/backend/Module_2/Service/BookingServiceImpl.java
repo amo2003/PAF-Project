@@ -1,14 +1,17 @@
 package backend.Module_2.Service;
 
+import backend.Module_2.Enums.BookingStatus;
 import backend.Module_2.Model.Booking;
 import backend.Module_2.Repository.BookingRepository;
+import backend.Module_2.dto.BookingRequest;
+import backend.Module_2.dto.BookingResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookingServiceImpl {
+public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
 
     public BookingServiceImpl(BookingRepository bookingRepository) {
@@ -34,7 +37,7 @@ public class BookingServiceImpl {
     @Override
     public BookingResponse createBooking(BookingRequest request) {
         //check sheduling conflict
-        List<Booking> conflicts bookingRepository.findConflictingBookings(
+        List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 request.getResourceId(),
                 request.getBookingDate(),
                 request.getStartTime(),
@@ -61,7 +64,7 @@ public class BookingServiceImpl {
 
     @Override
     public BookingResponse getBookingById(Long id) {
-        Booking booking = bookingRepository.findBy(id)
+        Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
         return toReponse(booking);
     }
