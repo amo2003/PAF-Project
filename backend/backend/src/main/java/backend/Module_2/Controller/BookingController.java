@@ -24,7 +24,7 @@ public class BookingController {
     }
 
     // POST /api/bookings — User creates a booking request
-    @PostMapping("/{id}")
+    @PostMapping
     public ResponseEntity<BookingResponse> createBooking(@Valid @RequestBody BookingRequest request) {
         BookingResponse response = bookingService.createBooking(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
