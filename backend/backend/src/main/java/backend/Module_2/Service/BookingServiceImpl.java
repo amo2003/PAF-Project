@@ -14,9 +14,11 @@ import java.util.stream.Collectors;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final EmailService emailService;
 
-    public BookingServiceImpl(BookingRepository bookingRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, EmailService emailService) {
         this.bookingRepository = bookingRepository;
+        this.emailService = emailService;
     }
 
     private BookingResponse toReponse(Booking booking) {
@@ -27,6 +29,7 @@ public class BookingServiceImpl implements BookingService {
                 booking.getBookingDate(),
                 booking.getStartTime(),
                 booking.getEndTime(),
+                booking.getUserEmail(),
                 booking.getPurpose(),
                 booking.getAttendees(),
                 booking.getStatus(),
@@ -36,8 +39,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponse createBooking(BookingRequest request) {
-
-        //check sheduling conflict
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 request.getResourceId(),
                 request.getBookingDate(),
@@ -47,17 +48,36 @@ public class BookingServiceImpl implements BookingService {
         if (!conflicts.isEmpty()) {
             throw new RuntimeException("Booking conflict: resource already booked for this time slot");
         }
+
         Booking booking = new Booking(
                 request.getUserId(),
                 request.getResourceId(),
                 request.getBookingDate(),
                 request.getStartTime(),
                 request.getEndTime(),
+                request.getUserEmail(),
                 request.getPurpose(),
                 request.getAttendees(),
                 BookingStatus.PENDING
         );
-        return toReponse(bookingRepository.save(booking));
+
+        BookingResponse response = toReponse(bookingRepository.save(booking));
+
+        emailService.sendEmail(
+            request.getUserEmail(),
+            "Booking Request Received — Smart Campus",
+            "Dear User,\n\n" +
+            "Your booking request has been received and is awaiting admin approval.\n\n" +
+            "Booking Details:\n" +
+            "Resource ID : " + request.getResourceId() + "\n" +
+            "Date        : " + request.getBookingDate() + "\n" +
+            "Time        : " + request.getStartTime() + " - " + request.getEndTime() + "\n" +
+            "Purpose     : " + request.getPurpose() + "\n\n" +
+            "We will notify you once your booking is reviewed.\n\n" +
+            "Smart Campus Operations Hub"
+        );
+
+        return response;
     }
 
     @Override
@@ -99,7 +119,23 @@ public class BookingServiceImpl implements BookingService {
             throw new RuntimeException("Only pending bookings can be approved");
         }
         booking.setStatus(BookingStatus.APPROVED);
-        return toReponse(bookingRepository.save(booking));
+        BookingResponse response = toReponse(bookingRepository.save(booking));
+
+        emailService.sendEmail(
+            booking.getUserEmail(),
+            "Booking Approved — Smart Campus",
+            "Dear User,\n\n" +
+            "Great news! Your booking has been APPROVED.\n\n" +
+            "Booking Details:\n" +
+            "Resource ID : " + booking.getResourceId() + "\n" +
+            "Date        : " + booking.getBookingDate() + "\n" +
+            "Time        : " + booking.getStartTime() + " - " + booking.getEndTime() + "\n" +
+            "Purpose     : " + booking.getPurpose() + "\n\n" +
+            "Please arrive on time. You may cancel if plans change.\n\n" +
+            "Smart Campus Operations Hub"
+        );
+
+        return response;
     }
 
     @Override
@@ -111,7 +147,23 @@ public class BookingServiceImpl implements BookingService {
         }
         booking.setStatus(BookingStatus.REJECTED);
         booking.setRejectionReason(reason);
-        return toReponse(bookingRepository.save(booking));
+        BookingResponse response = toReponse(bookingRepository.save(booking));
+
+        emailService.sendEmail(
+            booking.getUserEmail(),
+            "Booking Rejected — Smart Campus",
+            "Dear User,\n\n" +
+            "Unfortunately your booking request has been REJECTED.\n\n" +
+            "Booking Details:\n" +
+            "Resource ID     : " + booking.getResourceId() + "\n" +
+            "Date            : " + booking.getBookingDate() + "\n" +
+            "Time            : " + booking.getStartTime() + " - " + booking.getEndTime() + "\n" +
+            "Rejection Reason: " + reason + "\n\n" +
+            "You may submit a new booking with a different time or resource.\n\n" +
+            "Smart Campus Operations Hub"
+        );
+
+        return response;
     }
 
     @Override
