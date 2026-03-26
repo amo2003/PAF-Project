@@ -46,7 +46,7 @@ function MyBookings() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-10 px-6">
+    <div className="admin-bg min-h-screen py-10 px-6">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
