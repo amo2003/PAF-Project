@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createBooking } from '../api/bookingApi';
+import { createBooking } from '../api/BookingApi';
 
 const alertConfig = {
   success: { bg: 'bg-green-50 border-green-300', icon: '✅', titleColor: 'text-green-700', msgColor: 'text-green-600' },

@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './Module2/Components/Navbar';
-import Home from './Home/Home';
-import CreateBooking from './Module2/Pages/CreateBooking';
-import MyBookings from './Module2/Pages/MyBooking';
-import AdminBookings from './Module2/Pages/AdminBookings';
+import Navbar from './Module2/Components/NavBar';
+import Home from './Home/Homes';
+import CreateBooking from './Module2/Pages/CreateBookings';
+import MyBookings from './Module2/Pages/MyBookings';
+import AdminBookings from './Module2/Pages/AdminBooking';
 import AdminResources from './pages/AdminResources';
-import ChatBot from './Module2/Pages/ChatBot';
+import ChatBot from './Module2/Pages/ChatBoot';
 import './App.css';
 
 function App() {

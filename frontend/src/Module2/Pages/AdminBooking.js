@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllBookings, approveBooking, rejectBooking, deleteBooking } from '../api/bookingApi';
+import { getAllBookings, approveBooking, rejectBooking, deleteBooking } from '../api/BookingApi';
 
 const statusClass = {
   PENDING:   'bg-yellow-100 text-yellow-700',

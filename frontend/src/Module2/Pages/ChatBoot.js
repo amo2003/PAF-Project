@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { askChatBot } from "../api/bookingApi";
+import { askChatBot } from "../api/BookingApi";
 
 const ChatBot = () => {
   const [message, setMessage]   = useState("");
