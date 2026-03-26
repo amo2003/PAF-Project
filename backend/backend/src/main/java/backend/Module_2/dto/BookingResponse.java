@@ -13,6 +13,7 @@ public class BookingResponse {
     private LocalDate bookingDate;
     private LocalTime startTime;
     private LocalTime endTime;
+    private String userEmail;
     private String purpose;
     private Integer attendees;
     private BookingStatus status;
@@ -21,7 +22,7 @@ public class BookingResponse {
     public BookingResponse() {}
 
     public BookingResponse(Long id, Long userId, Long resourceId, LocalDate bookingDate,
-                           LocalTime startTime, LocalTime endTime, String purpose,
+                           LocalTime startTime, LocalTime endTime, String userEmail, String purpose,
                            Integer attendees, BookingStatus status, String rejectionReason) {
         this.id = id;
         this.userId = userId;
@@ -29,6 +30,7 @@ public class BookingResponse {
         this.bookingDate = bookingDate;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.userEmail = userEmail;
         this.purpose = purpose;
         this.attendees = attendees;
         this.status = status;
@@ -52,6 +54,9 @@ public class BookingResponse {
 
     public LocalTime getEndTime() { return endTime; }
     public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
+
+    public String getUserEmail() { return userEmail; }
+    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 
     public String getPurpose() { return purpose; }
     public void setPurpose(String purpose) { this.purpose = purpose; }
