@@ -19,6 +19,7 @@ function App() {
         <Route path="/admin/bookings"  element={<AdminBookings />} />
         <Route path="/admin/resources" element={<AdminResources />} />
         <Route path="/chat"            element={<ChatBot />} />
+        
       </Routes>
     </>
   );
