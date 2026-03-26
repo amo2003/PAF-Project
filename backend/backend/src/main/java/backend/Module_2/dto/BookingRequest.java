@@ -1,5 +1,8 @@
 package backend.Module_2.dto;
 
+import jakarta.validation.constraints.Email;
+import
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +27,9 @@ public class BookingRequest {
     @NotNull(message = "End time is required")
     private LocalTime endTime;
 
+    @NotBlank(message = "Email is required")
+    private String = userEmail;
+
     @NotBlank(message = "Purpose is required")
     private String purpose;
 
@@ -44,6 +50,9 @@ public class BookingRequest {
 
     public LocalTime getEndTime() { return endTime; }
     public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
+
+    public String getUserEmail() { return userEmail; }
+    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 
     public String getPurpose() { return purpose; }
     public void setPurpose(String purpose) { this.purpose = purpose; }
