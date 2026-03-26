@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
+
     private final BookingRepository bookingRepository;
 
     public BookingServiceImpl(BookingRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
     }
 
-    //convert booking entiy to reponse dto
     private BookingResponse toReponse(Booking booking) {
         return new BookingResponse(
                 booking.getId(),
@@ -36,6 +36,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponse createBooking(BookingRequest request) {
+
         //check sheduling conflict
         List<Booking> conflicts = bookingRepository.findConflictingBookings(
                 request.getResourceId(),
@@ -43,11 +44,9 @@ public class BookingServiceImpl implements BookingService {
                 request.getStartTime(),
                 request.getEndTime()
         );
-
         if (!conflicts.isEmpty()) {
-            throw new RuntimeException("Booking already exists");
+            throw new RuntimeException("Booking conflict: resource already booked for this time slot");
         }
-
         Booking booking = new Booking(
                 request.getUserId(),
                 request.getResourceId(),
@@ -58,7 +57,6 @@ public class BookingServiceImpl implements BookingService {
                 request.getAttendees(),
                 BookingStatus.PENDING
         );
-
         return toReponse(bookingRepository.save(booking));
     }
 
@@ -86,14 +84,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public List<BookingResponse> getAllBookingsByStatus(BookingStatus status) {
+        return bookingRepository.findByStatus(status)
+                .stream()
+                .map(this::toReponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public BookingResponse approveBooking(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
-
         if (booking.getStatus() != BookingStatus.PENDING) {
-            throw new RuntimeException("Only pending booking can be approved");
+            throw new RuntimeException("Only pending bookings can be approved");
         }
-
         booking.setStatus(BookingStatus.APPROVED);
         return toReponse(bookingRepository.save(booking));
     }
@@ -102,12 +106,9 @@ public class BookingServiceImpl implements BookingService {
     public BookingResponse rejectBooking(Long id, String reason) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
-
         if (booking.getStatus() != BookingStatus.PENDING) {
-            throw new RuntimeException("Only pending booking can be rejected");
-
+            throw new RuntimeException("Only pending bookings can be rejected");
         }
-
         booking.setStatus(BookingStatus.REJECTED);
         booking.setRejectionReason(reason);
         return toReponse(bookingRepository.save(booking));
@@ -117,11 +118,9 @@ public class BookingServiceImpl implements BookingService {
     public BookingResponse cancelBooking(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
-
         if (booking.getStatus() != BookingStatus.APPROVED) {
-            throw new RuntimeException("Only approved booking can be cancelled");
+            throw new RuntimeException("Only approved bookings can be cancelled");
         }
-
         booking.setStatus(BookingStatus.CANCELLED);
         return toReponse(bookingRepository.save(booking));
     }
