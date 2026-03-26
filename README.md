@@ -1,76 +1,93 @@
-📘 IT3030 – PAF Assignment 2026
-Smart Campus Operations Hub
+# 📘 IT3030 – PAF Assignment 2026  
+## Smart Campus Operations Hub
 
-A full-stack web application designed to manage university facilities, bookings, and maintenance workflows. This system provides a centralised platform for students, staff, and administrators to efficiently handle campus operations.
+A full-stack web application for managing university facilities, bookings, and maintenance workflows with role-based access and real-time notifications.
 
-🚀 Tech Stack
+---
+
+## 🚀 Tech Stack
+Backend: Spring Boot, JPA/Hibernate, MySQL/MongoDB, Spring Security (OAuth2)  
+Frontend: React.js, Axios, React Router  
+DevOps: GitHub, GitHub Actions  
+
+---
+
+## 📌 Core Features
+
+🏢 Facilities & Assets
+- Manage rooms, labs, and equipment  
+- Metadata: type, capacity, location, status  
+- Search & filter support  
+
+📅 Booking Management
+- Request bookings (date, time, purpose)  
+- Workflow: PENDING → APPROVED/REJECTED → CANCELLED  
+- Conflict detection (no overlapping bookings)  
+- Admin approval system  
+
+🛠️ Incident Tickets
+- Create tickets with priority, category, description  
+- Upload up to 3 images  
+- Workflow: OPEN → IN_PROGRESS → RESOLVED → CLOSED  
+- Technician assignment + comments  
+
+🔔 Notifications
+- Booking updates, ticket status changes, comments  
+- Notification panel in UI  
+
+🔐 Authentication & Authorization
+- OAuth 2.0 (Google login)  
+- Roles: USER, ADMIN, (TECHNICIAN optional)  
+
+---
+
+## 🧱 Architecture
+Backend: Controller → Service → Repository → Model  
+Frontend: Pages → Components → API Services  
+
+---
+
+## ⚙️ Setup
+
 Backend
-Java + Spring Boot
-Spring Security (OAuth 2.0)
-RESTful API
-MySQL / MongoDB
+cd backend  
+mvn clean install  
+mvn spring-boot:run  
 
 Frontend
-React.js
-Axios
-React Router
-Tailwind CSS / Bootstrap (optional)
+cd frontend  
+npm install  
+npm start  
 
-GitHub (Version Control)
+---
 
-📌 Features
-🏢 Module A – Facilities & Assets Catalogue
-Manage resources (rooms, labs, equipment)
-Metadata: type, capacity, location, availability
-Search & filter functionality
-Status tracking (ACTIVE / OUT_OF_SERVICE)
+## 🧪 Testing
+- Postman collection included  
+- Unit & integration tests  
+- Input validation & error handling implemented  
 
-📅 Module B – Booking Management
-Create booking requests
+---
 
-Workflow:
-PENDING → APPROVED / REJECTED → CANCELLED
-Conflict detection (no overlapping bookings)
-Admin approval system
-User-specific booking views
+## 👥 Team Contributions
+- Member 1: Facilities module  
+- Member 2: Booking system  
+- Member 3: Incident tickets  
+- Member 4: Notifications & Auth  
 
-🛠️ Module C – Maintenance & Incident Tickets
-Create incident tickets with:
-Category
-Description
-Priority
-Upload up to 3 images
+---
 
-Workflow:
-OPEN → IN_PROGRESS → RESOLVED → CLOSED
-Technician assignment
-Comments system with ownership rules
+## 📄 Submission
+Repo: it3030-paf-2026-smart-campus-groupXX  
+Report: IT3030_PAF_Assignment_2026_GroupXX.pdf  
 
-🔔 Module D – Notifications
+---
 
-Booking updates (approved/rejected)
-Ticket status changes
-Comment notifications
-Notification panel in UI
+## 💡 Optional Features
+- QR check-in  
+- Admin dashboard  
+- Notification preferences  
 
-🔐 Module E – Authentication & Authorisation
+---
 
-OAuth 2.0 (Google Login)
-Role-based access control:
-USER
-ADMIN
-TECHNICIAN (optional)
-
-🧱 System Architecture
-Backend Architecture (Layered)
-Controller → Service → Repository → Model
-
-Frontend Architecture
-Pages → Components → Services (API Calls)
-
-🧑‍🤝‍🧑 Team Contributions
-Member	Responsibility
-Member 1	Facilities & Resources Module
-Member 2	Booking Management
-Member 3	Incident & Ticket System
-Member 4	Notifications + Auth
+## 👨‍💻 Authors
+Group XX – SLIIT Faculty of Computing  
