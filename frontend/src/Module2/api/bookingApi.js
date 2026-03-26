@@ -10,3 +10,4 @@ export const approveBooking = (id) => API.put(`/bookings/${id}/approve`);
 export const rejectBooking = (id, reason) => API.put(`/bookings/${id}/reject`, { reason });
 export const cancelBooking = (id) => API.put(`/bookings/${id}/cancel`);
 export const deleteBooking = (id) => API.delete(`/bookings/${id}`);
+export const askChatBot = (message, step, userName) => API.post('/chat/ask', { message, step, userName });
