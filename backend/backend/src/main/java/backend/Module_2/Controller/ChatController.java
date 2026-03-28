@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chat")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5175")
 public class ChatController {
 
     @Value("${openrouter.api.key}")
