@@ -11,10 +11,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chat")
-@CrossOrigin("http://localhost:5175")
+@CrossOrigin("*")
 public class ChatController {
-
-    @Value("${openrouter.api.key}")
     private String openRouterApiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();
