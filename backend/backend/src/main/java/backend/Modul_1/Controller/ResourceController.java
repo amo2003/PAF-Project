@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/resources")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:5175")
 public class ResourceController {
 
     private final ResourceService resourceService;

@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bookings")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5175")
 public class BookingController {
 
     private final BookingService bookingService;
