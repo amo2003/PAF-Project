@@ -1,0 +1,39 @@
+# ===== FRONTEND =====
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.local
+
+# ===== BACKEND =====
+backend/backend/target/
+backend/backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.iml
+*.suo
+*.user
+.project
+.classpath
+.settings/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== LOGS =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== MISC =====
+*.lock
+!package-lock.json
